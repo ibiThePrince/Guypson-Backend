@@ -1,0 +1,9 @@
+Users controllers
+Liste des ops existants
+LISTER les villages de campagnes
+Liste des speculations lié aux campagnes
+Enregistrer les campagnes (id prod, id village, id spec)
+Ajouter une affiliation (affichage de la liste des ops totals)
+Afficahege des campagnes (CRUD recoltes)
+input(spec =, debut, fin, zone, alphabetique) -> tous villages union listes des campagnes union [debut, fin] union liste des producteurs
+Refaire le reporting 

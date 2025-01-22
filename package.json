@@ -1,0 +1,21 @@
+{
+  "name": "guypson",
+  "version": "1.0.0",
+  "description": "Projet Test de recensement des producteurs de la region du littoral",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "yvan",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "cookie-parser": "^1.4.7",
+    "cookie-session": "^2.1.0",
+    "dotenv": "^16.4.7",
+    "expres": "^0.0.5",
+    "express": "^4.21.2",
+    "express-session": "^1.18.1",
+    "mysql2": "^3.12.0"
+  }
+}
