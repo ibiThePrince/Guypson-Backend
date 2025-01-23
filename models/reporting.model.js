@@ -8,4 +8,5 @@ getReport: (speculation, DD, DA, village, callback) => {
   }
 }
 
+
 module.exports = Report;
