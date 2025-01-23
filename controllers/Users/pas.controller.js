@@ -32,7 +32,7 @@ exports.getPasByDaader = (req, res) => {
         res.status(404).send({ message: 'Pas non trouvé' });
         return;
       }
-      res.status(200).json(result[0]);
+      res.status(200).json(result);
     });
   };
 

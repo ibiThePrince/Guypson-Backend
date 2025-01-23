@@ -32,7 +32,7 @@ exports.getAffiliationByProd = (req, res) => {
       res.status(404).send({ message: 'Affiliation non trouvé' });
       return;
     }
-    res.status(200).json(result[0]);
+    res.status(200).json(result);
   });
 };
 
@@ -45,7 +45,7 @@ exports.getAffiliationByOp = (req, res) => {
       res.status(404).send({ message: 'Affiliation non trouvé' });
       return;
     }
-    res.status(200).json(result[0]);
+    res.status(200).json(result);
   });
 };
 
