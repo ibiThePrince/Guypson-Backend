@@ -8,6 +8,7 @@ const Campagne = {
     db.query(query, callback);
   },
 
+
   // Récupérer un Campagne par ID
   getById: (id, callback) => {
     const query = 'SELECT * FROM campagnes WHERE id = ?';
@@ -38,6 +39,11 @@ const Campagne = {
     db.query(query, [id], callback);
   },
 
+  // Recuperer une Campaggne par village et par speculation
+  getBySpeculationAndVillage: (id_village,id_spec, callback) => {
+    const query = 'SELECT * FROM campagnes WHERE id_Speculation = ? AND id_village = ?';
+    db.query(query, [id_spec, id_village], callback);
+  },
   // Créer un nouvel Campagne
   create: (data, callback) => {
     const query = 'INSERT INTO campagnes SET ?';
