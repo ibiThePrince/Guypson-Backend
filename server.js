@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
+const MySQLStore = require('connect-mysql')(session);
 
 const prodRoutes = require('./routes/census/productor.routes');
 const specRoutes = require('./routes/Configuration/speculations.routes');
@@ -14,7 +15,9 @@ const pasRoutes = require('./routes/Configuration/Users/pas.routes');
 const villageRoutes = require('./routes/Configuration/Users/village.routes');
 const campagnesRoutes = require('./routes/census/campagnes.routes');
 const ReportRoutes = require('./routes/reporting/reporting.routes');
-//const semencesRoutes = require('./routes/semences.routes');
+const userRoutes = require('./routes/user.routes')
+
+const { checkSession } = require('./controllers/user.controller');
 
 
 const app = express();
@@ -23,15 +26,25 @@ const PORT = process.env.PORT || 3000;
 // Middleware pour analyser les cookies
 app.use(cookieParser());
 
-// Middleware pour les sessions
+// Configuration de la session
+const sessionStore = new MySQLStore({
+  config: {
+    host: process.env.DB_HOST || 'localhost',
+    user: process.env.DB_USER || 'root',
+    password: process.env.DB_PASS || '',
+    database: process.env.DB_NAME || 'guypson',
+  },
+});
+
 app.use(session({
-  secret: 'mot_de_passe_de_la_session',
-  resave: false, // Ne sauvegarde que lorsque c'est necessaire
-  saveUninitialized: false, // Évite de sauvegarder des sessions non initialisées
+  secret: 'password', 
+  resave: false, 
+  saveUninitialized: false, 
+  store: sessionStore,
   cookie: {
     secure: false, 
     httpOnly: true,
-    maxAge: 24 * 60 * 60 * 1000 // Durée de vie de 24 heures pour les cookies
+    maxAge: 24 * 60 * 60 * 1000 // 1 jour
   }
 }));
 
@@ -51,19 +64,11 @@ app.use('/api/village', villageRoutes);
 app.use('/api/campagnes', campagnesRoutes);
 app.use('/api/pas', pasRoutes);
 app.use('/api/report', ReportRoutes);
+app.use('/api/user', userRoutes);
 
 
 // Route de test pour la session
-app.get('/api/session', (req, res) => {
-  if (!req.session.views) {
-    req.session.views = 1;
-    res.send('Bienvenue, c\'est votre première visite !');
-  } else {
-    req.session.views++;
-    res.send(`Nombre de visites : ${req.session.views}`);
-  }
-});
-
+app.get('/api/session', checkSession);
 
 // Démarrage du serveur
 app.listen(PORT, () => {
